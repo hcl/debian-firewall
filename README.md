@@ -2,3 +2,9 @@
 
 
 
+## Usage 
+
+```bash
+sudo ./install.sh
+```
+
