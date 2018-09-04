@@ -9,8 +9,7 @@
 -A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
 -A INPUT -p tcp --dport 80 -j ACCEPT
 -A INPUT -p tcp --dport 443 -j ACCEPT
--A INPUT -p ipv6-icmp --icmpv6-type 128 -j ACCEPT
--A INPUT -m limit --limit 5/minute -j LOG --log-prefix "iptables denied: " --log-level 7
+-A INPUT -p ipv6-icmp -j ACCEPT
 -A INPUT -j REJECT --reject-with icmp6-port-unreachable
 -A FORWARD -j REJECT --reject-with icmp6-port-unreachable
 -A OUTPUT -j ACCEPT
