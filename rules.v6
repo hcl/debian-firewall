@@ -4,14 +4,15 @@
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 -A INPUT -i lo -j ACCEPT
--A INPUT -d fe80::/10 ! -i lo -j REJECT --reject-with icmp6-port-unreachable
+-A INPUT -d fe80::/10 ! -i lo -j REJECT --reject-with icmp-port-unreachable
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
--A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
--A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
--A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
--A INPUT -p ipv6-icmp -j ACCEPT
--A INPUT -j REJECT --reject-with icmp6-port-unreachable
--A FORWARD -j REJECT --reject-with icmp6-port-unreachable
+-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+-A INPUT -p ipv6-icmp --icmp-type 128 -j ACCEPT
+-A INPUT -m limit --limit 5/minute -j LOG --log-prefix "iptables denied: " --log-level 7
+-A INPUT -j REJECT --reject-with icmp-port-unreachable
+-A FORWARD -j REJECT --reject-with icmp-port-unreachable
 -A OUTPUT -j ACCEPT
 COMMIT
 # Completed on Tue Nov 21 00:06:41 2017
